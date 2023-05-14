@@ -3,24 +3,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
-import java.util.*;
-import java.util.Timer;
+import javax.swing.Timer;
 
-class ClockAnimation extends JFrame {
+class ClockAnimation extends JPanel {
     private Clock clock = new Clock();
-    private Timer timer;
-
+    Timer timer = new Timer(1000, new TimerListener());
     public ClockAnimation() {
         add(clock);
-
-        timer = new Timer(1000, new TimerListener());
     }
-
-    public void start() {
+    public void start(){
         timer.start();
     }
-
-    public void stop() {
+    public void stop(){
         timer.stop();
     }
 
@@ -36,7 +30,7 @@ class ClockAnimation extends JFrame {
 public class ex10_4 {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Exercise10_04");
-        Clock clock = new Clock();
+        ClockAnimation clock = new ClockAnimation();
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
 
@@ -48,6 +42,18 @@ public class ex10_4 {
         //add
         butpanel.add(start);
         butpanel.add(stop);
+
+        //logic 
+        start.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+                clock.start();
+            }
+        });
+        stop.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+                clock.stop();
+            }
+        });
         mainPanel.add(butpanel,BorderLayout.SOUTH);
 
         mainPanel.add(clock, BorderLayout.CENTER);
