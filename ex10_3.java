@@ -83,7 +83,6 @@ public class ex10_3 {
                 centerPanel.removeAll();
                 figure.paintRectangle();
                 centerPanel.add(figure);
-                centerPanel.revalidate();
                 centerPanel.repaint();
             }
         });
@@ -93,7 +92,6 @@ public class ex10_3 {
                 centerPanel.removeAll();
                 figure.paintOval();
                 centerPanel.add(figure);
-                centerPanel.revalidate();
                 centerPanel.repaint();
             }
         });
@@ -106,6 +104,7 @@ public class ex10_3 {
         frame.add(mainpanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 300);
+        frame.setResizable(false);
         frame.setVisible(true);
     }
 
@@ -116,7 +115,7 @@ class FigurePanel extends JPanel {
     private boolean isRectangle;
 
     public FigurePanel() {
-        isRectangle = true;
+        //do nothing
     }
 
     public void paintRectangle() {
@@ -130,16 +129,24 @@ class FigurePanel extends JPanel {
     }
 
     public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        int width = getWidth() - 40;
+        int height = getHeight() - 40;
+        int x = (getWidth() - width) / 2;
+        int y = (getHeight() - height) / 2;
+
         if (isRectangle) {
-            g.drawRect(50, 0, 400, 180);
+            g.drawRect(x, y, width, height);
+            setOpaque(false);
         } else {
-            g.drawOval(50, 0, 400, 180);
+            g.drawOval(x, y, width, height);
+            setOpaque(false);
         }
 
     }
 
     public Dimension getPreferredSize() {
-        return new Dimension(500, 500);
+        return new Dimension(500,200);
     }
 
 }
