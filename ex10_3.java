@@ -35,9 +35,6 @@ public class ex10_3 {
         // set center
         JPanel centerPanel = new JPanel();
 
-        // add
-        mainpanel.add(centerPanel, BorderLayout.CENTER);
-
         // set south
         JPanel southPanel = new JPanel();
         JRadioButton rec = new JRadioButton("Rectangle");
@@ -77,6 +74,32 @@ public class ex10_3 {
                 centerPanel.setBackground(Color.green);
             }
         });
+        //
+        FigurePanel figure = new FigurePanel();
+        centerPanel.add(figure);
+
+        rec.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                centerPanel.removeAll();
+                figure.paintRectangle();
+                centerPanel.add(figure);
+                centerPanel.revalidate();
+                centerPanel.repaint();
+            }
+        });
+
+        oval.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                centerPanel.removeAll();
+                figure.paintOval();
+                centerPanel.add(figure);
+                centerPanel.revalidate();
+                centerPanel.repaint();
+            }
+        });
+
+        // add
+        mainpanel.add(centerPanel, BorderLayout.CENTER);
 
         // add
         mainpanel.add(southPanel, BorderLayout.SOUTH);
@@ -88,6 +111,35 @@ public class ex10_3 {
 
 }
 
-class FigurePanel extends JPanel{
-    
+class FigurePanel extends JPanel {
+
+    private boolean isRectangle;
+
+    public FigurePanel() {
+        isRectangle = true;
+    }
+
+    public void paintRectangle() {
+        isRectangle = true;
+        repaint();
+    }
+
+    public void paintOval() {
+        isRectangle = false;
+        repaint();
+    }
+
+    public void paintComponent(Graphics g) {
+        if (isRectangle) {
+            g.drawRect(50, 0, 400, 180);
+        } else {
+            g.drawOval(50, 0, 400, 180);
+        }
+
+    }
+
+    public Dimension getPreferredSize() {
+        return new Dimension(500, 500);
+    }
+
 }
